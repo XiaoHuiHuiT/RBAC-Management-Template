@@ -19,10 +19,53 @@
 <div data-options="region:'north'" style="height:100px;background: #ec4e00;padding: 20px 20px">
     <img src="main_logo.png"/>
 </div>
-<div data-options="region:'south'" style="height:50px;padding-top: 15px;">
+<div data-options="region:'south'" style="height:50px;padding-top: 15px;border-bottom: 3px solid #ec4e00;">
     <p align="center" font-size="14px">Copyright (c) 2020-2030 IT6666.Co.Ltd. All Rights Reserved.</p>
 </div>
-<div data-options="region:'west',title:'West',split:true" style="width:300px;"></div>
-<div data-options="region:'center'" style="padding:5px;background:#eee;"></div>
+<div data-options="region:'west',split:true" style="width:300px;">
+    <div id="aa" class="easyui-accordion" data-options="fit:true">
+        <div title="菜单" data-options="iconCls:'icon-save',selected:true" style="overflow:auto;padding:10px;">
+            <ul id="tree"></ul>
+        </div>
+        <div title="Title2" data-options="iconCls:'icon-reload'" style="padding:10px;">
+            content2
+        </div>
+        <div title="Title3">
+            content3
+        </div>
+    </div>
+</div>
+<div data-options="region:'center'" style="padding:5px;background:#eee;">
+    <div id="tabs">
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $('#tree').tree({
+            url: 'tree.json',
+            lines: true,
+            onClick: function (node) {
+                // 在添加标签之前，做判断，判断这个标签是否存在
+                let exists = $('#tabs').tabs('exists', node.text);
+                if (exists) {
+                    // 存在就选中
+                    $('#tabs').tabs('select', node.text);
+                } else {
+                    // 不存在就添加
+                    $("#tabs").tabs("add", {
+                        title: node.text,
+                        closable: true,
+                        content: 'center'
+                    });
+                }
+            }
+        });
+
+        $('#tabs').tabs({
+            fit: true
+        });
+    });
+</script>
 </body>
 </html>
